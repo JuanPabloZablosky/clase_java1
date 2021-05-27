@@ -3,12 +3,13 @@ package meli.ejerc;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RadixSortEjerc
 {
-	public static void radixSort(int []arr)
+	public static int[] radixSort(int[] arr)
 	{
-		// Creo la HashMap donde se van a guardar las listas con los valores correspondientes a los digitos
+		// Creo el HashMap donde se van a guardar los ArrayList con los valores correspondientes a los digitos
 		HashMap<Character, ArrayList<String>> hashMap = new HashMap<>(10);
 
 		// Inincializo las listas vacías del HashMap
@@ -25,7 +26,6 @@ public class RadixSortEjerc
 		// Tomo la longitud del numero de mayor digitos
 		int cantIteraciones = cadenasArray[1].length();
 
-
 		// Pasos a realizar para completar el algoritmo
 		for (int i = 0; i < cantIteraciones; i++) {
 
@@ -41,17 +41,29 @@ public class RadixSortEjerc
 				hashMap.get(digitoAEnlistar).add(elem);
 			}
 
-			for (int j = 0; j < ; j++) {
-				
+			// Creo un arraylist auxiliar
+			ArrayList<String> arrStrAux = new ArrayList<>();
+
+			// Recorro las listas del HashMap para extraer los string
+			// y formar el nuevo array que se utilizará en la próxima iteración
+			for (Map.Entry<Character, ArrayList<String>> entry: hashMap.entrySet()) {
+				for(String n:entry.getValue()){
+					arrStrAux.add(n);
+				}
+				entry.getValue().clear();
 			}
+
+			cadenasArray = arrStrAux.toArray(new String[cadenasArray.length]);
 		}
 
+		arr = StringUtil.toIntArray(cadenasArray);
+		return arr;
 	}
 
 	public static void main(String[] args)
 	{
 		int arr[]={16223,898,13,906,235,23,9,1532,6388,2511,8};
-		radixSort(arr);
+		arr = radixSort(arr);
 		
 		for(int i=0; i<arr.length;i++)
 		{
